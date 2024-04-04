@@ -14,8 +14,8 @@ jobs:
     - name: Install dbt
       run: pip install dbt-core
     - name: Run dbt tests
-      run: dbt test
+      run: dbt test --profiles-dir '04-analytics-engineering /taxi_rides_ny'
       working-directory: '04-analytics-engineering /taxi_rides_ny'
     - name: Run dbt models
-      run: dbt run
+      run: dbt run --profiles-dir '04-analytics-engineering /taxi_rides_ny'
       working-directory: '04-analytics-engineering /taxi_rides_ny'
