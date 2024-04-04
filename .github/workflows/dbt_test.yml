@@ -13,9 +13,15 @@ jobs:
         python-version: '3.8'
     - name: Install dbt
       run: pip install dbt-core
+    - name: Create profiles.yml
+      run: |
+        mkdir -p ~/.dbt
+        echo "$DBT_PROFILES_YML" > ~/.dbt/profiles.yml
+      env:
+        DBT_PROFILES_YML: ${{ secrets.DBT_PROFILES_YML }}
     - name: Run dbt tests
-      run: dbt test --profiles-dir '04-analytics-engineering /taxi_rides_ny'
-      working-directory: '04-analytics-engineering /taxi_rides_ny'
+      run: dbt test --profiles-dir ~/.dbt
+      working-directory: '04-analytics-engineering/taxi_rides_ny'
     - name: Run dbt models
-      run: dbt run --profiles-dir '04-analytics-engineering /taxi_rides_ny'
-      working-directory: '04-analytics-engineering /taxi_rides_ny'
+      run: dbt run --profiles-dir ~/.dbt
+      working-directory: '04-analytics-engineering/taxi_rides_ny'
