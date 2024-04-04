@@ -10,3 +10,14 @@ macros:
         description: > 
           payment_type value.
           Must be one of the accepted values, otherwise the macro will return null
+
+macros:
+  - name: get_vendorid_description
+    description: >
+      This macro receives a vendorid and returns the corresponding description.
+    arguments:
+      - name: vendorid
+        type: int
+        description: > 
+          vendorid value.
+          Must be one of the accepted values, otherwise the macro will return null
