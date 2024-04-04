@@ -13,6 +13,8 @@ jobs:
         python-version: '3.8'
     - name: Install dbt
       run: pip install dbt-core
+    - name: Build dbt
+      run: dbt build
     - name: Run dbt tests
       run: dbt test
     - name: Run dbt models
