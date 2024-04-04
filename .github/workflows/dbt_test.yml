@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - '04-analytics-engineering /taxi_rides_ny'
+  pull_request:
+    paths:
+      - '04-analytics-engineering /taxi_rides_ny'
 
 jobs:
   build:
