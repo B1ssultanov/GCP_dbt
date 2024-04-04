@@ -1,12 +1,6 @@
 name: dbt CI/CD
 
-on:
-  push:
-    paths:
-      - '04-analytics-engineering /taxi_rides_ny/**'
-  pull_request:
-    paths:
-      - '04-analytics-engineering /taxi_rides_ny/**'
+on: [push]
 
 jobs:
   build:
@@ -21,5 +15,7 @@ jobs:
       run: pip install dbt-core
     - name: Run dbt tests
       run: dbt test
+      working-directory: '04-analytics-engineering /taxi_rides_ny'
     - name: Run dbt models
       run: dbt run
+      working-directory: '04-analytics-engineering /taxi_rides_ny'
