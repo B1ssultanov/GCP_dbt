@@ -14,7 +14,7 @@ with tripdata as
 select
     -- identifiers
     {{ dbt_utils.generate_surrogate_key(['vendorid', 'lpep_pickup_datetime']) }} as tripid,
-    {{ dbt.safe_cast("vendorid", api.Column.translate_type("integer")) }} as vendorid,
+    coalesce({{ dbt.safe_cast("vendorid", api.Column.translate_type("integer")) }},0) as vendorid,
     {{ dbt.safe_cast("ratecodeid", api.Column.translate_type("integer")) }} as ratecodeid,
     {{ dbt.safe_cast("pulocationid", api.Column.translate_type("integer")) }} as pickup_locationid,
     {{ dbt.safe_cast("dolocationid", api.Column.translate_type("integer")) }} as dropoff_locationid,
@@ -39,13 +39,14 @@ select
     cast(improvement_surcharge as numeric) as improvement_surcharge,
     cast(total_amount as numeric) as total_amount,
     coalesce({{ dbt.safe_cast("payment_type", api.Column.translate_type("integer")) }},0) as payment_type,
-    {{ get_payment_type_description("payment_type") }} as payment_type_description
+    {{ get_payment_type_description('payment_type') }} as payment_type_description,
+    {{ get_vendorid_description('vendorid') }} as vendor_name
 from tripdata
 where rn = 1
 
 
 -- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
-{% if var('is_test_run', default=true) %}
+{% if var('is_test_run', default=false) %}
 
   limit 100
 
