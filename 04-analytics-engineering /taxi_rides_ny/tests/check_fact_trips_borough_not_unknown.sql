@@ -1,0 +1,1 @@
+select pickup_borough from {{ ref('fact_trips') }} where pickup_borough = 'Unknown'
